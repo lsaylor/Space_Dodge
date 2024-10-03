@@ -8,8 +8,7 @@ HEIGHT = 800
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Dodge: Survival Mode")
 
-
-BG = pygame.transform.scale(pygame.image.load("background.png"), (WIDTH, HEIGHT))
+BG = pygame.transform.scale(pygame.image.load("main_menu_bg.png"), (WIDTH, HEIGHT))
 
 PLAYER_WIDTH = 40
 PLAYER_HEIGHT = 60
@@ -18,6 +17,8 @@ PLAYER_VEL = 5
 STAR_WIDTH = 10
 STAR_HEIGHT = 20
 STAR_VEL = 3
+
+#function
 
 def draw(player, elapsed_time, stars):
     WINDOW.blit(BG, (0,0))
@@ -28,9 +29,9 @@ def draw(player, elapsed_time, stars):
 
     for star in stars:
         pygame.draw.rect(WINDOW, "white", star)
-
     pygame.display.update()
 
+#function
 
 def main():
     run = True
@@ -42,7 +43,7 @@ def main():
     star_add_increment = 2000
     star_count = 0
     stars = []
-    star_amount = 3
+    star_amount = 5
     hit = False
 
     while run:
