@@ -33,29 +33,35 @@ BUTTON_SURFACE = pygame.transform.scale(BUTTON_SURFACE, (WIDTH, HEIGHT))
 
 
 class Button():
-    def __init__(self, BUTTON_SURFACE, x_pos, y_pos, text_input):
-        self.image = BUTTON_SURFACE
+    def __init__(self, background, x_pos, y_pos, text_input, font=pygame.font.SysFont("comicsans", 50), color_text=COLOR_TEXT, color_highlight=HIGHLIGHT_COLOR_TEXT):
+        self.background = background
         self.x_pos = x_pos
         self.y_pos = y_pos
-        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+        self.rect = self.background.get_rect(center=(self.x_pos, self.y_pos))
         self.text_input = text_input
-        self.text = FONT.render(self.text_input, True, COLOR_TEXT)
+        self.text = font.render(self.text_input, True, color_text)
         self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+        self.text_color = color_text
+        self.text_hilight = color_highlight
         self.in_range = False
         self.button_pressed = False
 
     def update(self, parent_menu):
-        #from main_menu import MAIN_MENU
         parent_menu.blit(self.text, self.text_rect)
+
+    def full_update(self, parent_menu):
+        parent_menu.blit(self.background, self.rect)
+        parent_menu.blit(self.text, self.text_rect)
+
     def checkForInput(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             self.in_range = True
 
     def changeColor(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-            self.text = FONT.render(self.text_input, True, HIGHLIGHT_COLOR_TEXT)
+            self.text = FONT.render(self.text_input, True, self.text_hilight)
         else:
-            self.text = FONT.render(self.text_input, True, COLOR_TEXT)
+            self.text = FONT.render(self.text_input, True, self.text_color)
 
 
 
