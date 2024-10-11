@@ -27,9 +27,11 @@ WIDTH = 100
 HEIGHT = 50
 MENU = pygame.display.set_mode((WIDTH, HEIGHT))
 #specifics for button. Replace BUTTON_IMAGE with "imagename.jpeg/png" to load a custom image
-BUTTON_IMAGE = "default_button_bg.png"
-BUTTON_SURFACE = pygame.image.load(BUTTON_IMAGE)
-BUTTON_SURFACE = pygame.transform.scale(BUTTON_SURFACE, (WIDTH, HEIGHT))
+
+
+#BUTTON_IMAGE = "Space_Dodge_backup/default_button_bg.png"
+#BUTTON_SURFACE = pygame.image.load(BUTTON_IMAGE)
+#BUTTON_SURFACE = pygame.transform.scale(BUTTON_SURFACE, (WIDTH, HEIGHT))
 
 
 class Button():

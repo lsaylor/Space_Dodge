@@ -1,13 +1,12 @@
-import button
 import pygame
+import button
 import game_1_main
 
 WIDTH, HEIGHT = 1000, 800
 MAIN_MENU = pygame.display.set_mode((WIDTH, HEIGHT))
-MAIN_RUN = True
 BG_MAINMENU = pygame.image.load("main_menu_bg.png")
 BG_MAINMENU = pygame.transform.scale(BG_MAINMENU, (WIDTH, HEIGHT))
-pygame.display.set_caption("Space Dodge: Main Menu")
+
 
 
 
@@ -28,29 +27,75 @@ TITLE_FONT = pygame.font.SysFont("comicsans", 100)
 T_WIDTH = len(TITLE_TEXT)
 TITLE = button.Button(BG_BUTTONS,WIDTH/2-P_WIDTH/2,HEIGHT-GEN_HEIGHT-550, "Space Dodge",TITLE_FONT, "red")
 
+OPTIONS_TEXT = "OPTIONS"
+O_WIDTH = len(OPTIONS_TEXT)
+OPTIONS_BUTTON = button.Button(BG_BUTTONS,WIDTH/2-P_WIDTH/2, HEIGHT-GEN_HEIGHT-300, "OPTIONS")
 
-CLOCK = pygame.time.Clock()
+def main_menu():
 
-while MAIN_RUN:
-    CLOCK.tick(60)
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            MAIN_RUN = False
-            pygame.quit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            QUIT_BUTTON.checkForInput(pygame.mouse.get_pos())
-            if QUIT_BUTTON.in_range:
+    pygame.display.set_caption("Space Dodge: Main Menu")
+    CLOCK = pygame.time.Clock()
+    MAIN_RUN = True
+    while MAIN_RUN:
+        CLOCK.tick(60)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 MAIN_RUN = False
                 pygame.quit()
-            PLAY_BUTTON.checkForInput(pygame.mouse.get_pos())
-            if PLAY_BUTTON.in_range:
-                game_1_main.main()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                QUIT_BUTTON.checkForInput(pygame.mouse.get_pos())
+                if QUIT_BUTTON.in_range:
+                    MAIN_RUN = False
+                    pygame.quit()
+                PLAY_BUTTON.checkForInput(pygame.mouse.get_pos())
+                if PLAY_BUTTON.in_range:
+                    game_1_main.main()
+                OPTIONS_BUTTON.checkForInput(pygame.mouse.get_pos())
+                if OPTIONS_BUTTON.in_range:
+                    options_menu()
+                    MAIN_RUN = False
 
-    MAIN_MENU.blit(BG_MAINMENU, (0,0))
-    QUIT_BUTTON.changeColor(pygame.mouse.get_pos())
-    QUIT_BUTTON.update(MAIN_MENU)
-    PLAY_BUTTON.changeColor(pygame.mouse.get_pos())
-    PLAY_BUTTON.update(MAIN_MENU)
-    TITLE.full_update(MAIN_MENU)
-    pygame.display.update()
+        MAIN_MENU.blit(BG_MAINMENU, (0,0))
+        QUIT_BUTTON.changeColor(pygame.mouse.get_pos())
+        QUIT_BUTTON.update(MAIN_MENU)
+        OPTIONS_BUTTON.changeColor(pygame.mouse.get_pos())
+        OPTIONS_BUTTON.update(MAIN_MENU)
+        PLAY_BUTTON.changeColor(pygame.mouse.get_pos())
+        PLAY_BUTTON.update(MAIN_MENU)
+        TITLE.full_update(MAIN_MENU)
+        pygame.display.update()
+
+
+def options_menu():
+
+
+    pygame.display.set_caption("Space Dodge: Options")
+    CLOCK = pygame.time.Clock()
+    OPTIONS_RUN = True
+
+    
+    BACK_BUTTON = button.Button(BG_BUTTONS, 100, 70, "MENU")
+
+
+    while OPTIONS_RUN:
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                OPTIONS_RUN = False
+                pygame.quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                BACK_BUTTON.checkForInput(pygame.mouse.get_pos())
+                if BACK_BUTTON.in_range:
+                    OPTIONS_RUN = False
+                    main_menu()
+        
+
+        MAIN_MENU.blit(BG_MAINMENU, (0,0))
+        BACK_BUTTON.changeColor(pygame.mouse.get_pos())
+        BACK_BUTTON.update(MAIN_MENU)
+        pygame.display.update()
+
+
+main_menu()
