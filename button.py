@@ -17,47 +17,53 @@ import pygame
 #intializing pygame dependencies
 pygame.init()
 pygame.font.init()
-pygame.display.set_caption("NEEDS EDITING(WHATEVER TEXT)")
 # ---creating global variables--- #
 #global variables for fonts/font colors
 FONT = pygame.font.SysFont("comicsans", 50)
 COLOR_TEXT = "white"
 HIGHLIGHT_COLOR_TEXT = "green"
 #global dimensions for windows and defining main window (MENU) variables
-WIDTH = 200
-HEIGHT = 100
+WIDTH = 100
+HEIGHT = 50
 MENU = pygame.display.set_mode((WIDTH, HEIGHT))
 #specifics for button. Replace BUTTON_IMAGE with "imagename.jpeg/png" to load a custom image
-BUTTON_IMAGE = "default_button_bg.png"
-BUTTON_SURFACE = pygame.image.load(BUTTON_IMAGE)
-BUTTON_SURFACE = pygame.transform.scale(BUTTON_SURFACE, (WIDTH, HEIGHT))
+
+
+#BUTTON_IMAGE = "Space_Dodge_backup/default_button_bg.png"
+#BUTTON_SURFACE = pygame.image.load(BUTTON_IMAGE)
+#BUTTON_SURFACE = pygame.transform.scale(BUTTON_SURFACE, (WIDTH, HEIGHT))
 
 
 class Button():
-    def __init__(self, image, x_pos, y_pos, text_input):
-        self.image = image
+    def __init__(self, background, x_pos, y_pos, text_input, font=pygame.font.SysFont("comicsans", 50), color_text=COLOR_TEXT, color_highlight=HIGHLIGHT_COLOR_TEXT):
+        self.background = background
         self.x_pos = x_pos
         self.y_pos = y_pos
-        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+        self.rect = self.background.get_rect(center=(self.x_pos, self.y_pos))
         self.text_input = text_input
-        self.text = FONT.render(self.text_input, True, COLOR_TEXT)
+        self.text = font.render(self.text_input, True, color_text)
         self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+        self.text_color = color_text
+        self.text_hilight = color_highlight
+        self.in_range = False
         self.button_pressed = False
 
-    def update(self):
-        from main_menu import MAIN_MENU
-        MAIN_MENU.blit(self.image, self.rect)
-        MAIN_MENU.blit(self.text, self.text_rect)
-        self.button_pressed = False
+    def update(self, parent_menu):
+        parent_menu.blit(self.text, self.text_rect)
+
+    def full_update(self, parent_menu):
+        parent_menu.blit(self.background, self.rect)
+        parent_menu.blit(self.text, self.text_rect)
+
     def checkForInput(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-            self.button_pressed = True
+            self.in_range = True
 
     def changeColor(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-            self.text = FONT.render(self.text_input, True, HIGHLIGHT_COLOR_TEXT)
+            self.text = FONT.render(self.text_input, True, self.text_hilight)
         else:
-            self.text = FONT.render(self.text_input, True, COLOR_TEXT)
+            self.text = FONT.render(self.text_input, True, self.text_color)
 
 
 
