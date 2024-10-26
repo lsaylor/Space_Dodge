@@ -3,8 +3,11 @@ import button
 import game_1_main
 
 WIDTH, HEIGHT = 1000, 800
+
+screen_info = pygame.display.Info()
+screen_width, screen_height = screen_info.current_w, screen_info.current_h
 MAIN_MENU = pygame.display.set_mode((WIDTH, HEIGHT))
-BG_MAINMENU = pygame.image.load("main_menu_bg.png")
+BG_MAINMENU = pygame.image.load("main_menu_bg.png").convert()
 BG_MAINMENU = pygame.transform.scale(BG_MAINMENU, (WIDTH, HEIGHT))
 
 
@@ -31,8 +34,25 @@ OPTIONS_TEXT = "OPTIONS"
 O_WIDTH = len(OPTIONS_TEXT)
 OPTIONS_BUTTON = button.Button(BG_BUTTONS,WIDTH/2-P_WIDTH/2, HEIGHT-GEN_HEIGHT-300, "OPTIONS")
 
-def main_menu():
 
+haspressed = True
+def toggle_screen():
+    global MAIN_MENU, haspressed, WIDTH, HEIGHT, BG_MAINMENU
+    if haspressed:
+        MAIN_MENU = pygame.display.set_mode((screen_width, screen_height))
+        WIDTH = screen_width
+        HEIGHT = screen_height
+        haspressed = False
+        print(str(screen_height))
+    else:
+        WIDTH = 1000
+        HEIGHT = 800
+        MAIN_MENU = pygame.display.set_mode((WIDTH, HEIGHT))
+        haspressed = True
+    BG_MAINMENU = pygame.transform.scale(BG_MAINMENU, (WIDTH, HEIGHT))
+
+
+def main_menu():
 
     pygame.display.set_caption("Space Dodge: Main Menu")
     CLOCK = pygame.time.Clock()
@@ -44,6 +64,9 @@ def main_menu():
             if event.type == pygame.QUIT:
                 MAIN_RUN = False
                 pygame.quit()
+            if event.type == pygame.K_f:
+                toggle_screen()
+                #game_1_main.main()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 QUIT_BUTTON.checkForInput(pygame.mouse.get_pos())
                 if QUIT_BUTTON.in_range:

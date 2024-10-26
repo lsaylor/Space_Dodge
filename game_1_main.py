@@ -1,3 +1,14 @@
+'''
+suggested updates:
+1) shooting the stars to destroy them/clear path
+2) power-ups (ghost, skinny, speed, teleport, clear screen)
+3) lives/health
+4) stars follow you/game modes/boss battles
+5) full screen
+
+
+'''
+
 import pygame
 import time
 import random
@@ -8,7 +19,7 @@ HEIGHT = 800
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Dodge: Survival Mode")
 
-BG = pygame.transform.scale(pygame.image.load("main_menu_bg.png"), (WIDTH, HEIGHT))
+BG = pygame.transform.scale(pygame.image.load("game_bg.png"), (WIDTH, HEIGHT))
 
 PLAYER_WIDTH = 40
 PLAYER_HEIGHT = 60
@@ -22,7 +33,7 @@ STAR_VEL = 3
 
 def draw(player, elapsed_time, stars):
     WINDOW.blit(BG, (0,0))
-    pygame.draw.rect(WINDOW, "blue", player)
+    pygame.draw.rect(WINDOW, "yellow", player)
     
     time_text = FONT.render(f"Time: {round(elapsed_time)}s", 1, "white")
     WINDOW.blit(time_text, (10,10))
@@ -83,11 +94,10 @@ def main():
             lost_text = FONT.render("You Lost!", 1, "white")
             WINDOW.blit(lost_text, (WIDTH/2 - lost_text.get_width()/2, HEIGHT/2 - lost_text.get_height()/2))
             pygame.display.update()
-            pygame.time.delay(4000)
-            break
-
+            pygame.time.delay(2000)
+            from main_menu import main_menu
+            main_menu()
         draw(player, elapsed_time, stars)
-    pygame.quit()
 
 
 
